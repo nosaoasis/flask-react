@@ -1,4 +1,4 @@
-.App {
+/* .App {
   text-align: center;
 }
 
@@ -35,4 +35,50 @@
   to {
     transform: rotate(360deg);
   }
+} */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.header {
+  background-color: chartreuse;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 3rem;
+  text-decoration: none;
+}
+
+.header ul {
+  list-style: none;
+  display: flex;
+  justify-content: space-around;
+  width: 30%;
+}
+
+.header ul li {
+}
+
+.link {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  font-weight: bold;
+  color: black;
+}
+
+.single-article-btns-div {
+  display: flex;
+}
+
+.edit-article {
+  background-color: rgb(61, 61, 202);
+  color: white;
+}
+.delete-article {
+  background-color: rgb(223, 33, 33);
+  color: white;
 }

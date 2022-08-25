@@ -1,3 +1,4 @@
+import os
 from dataclasses import fields
 from flask import Flask, jsonify, request
 from flask_sqlalchemy import SQLAlchemy
@@ -5,10 +6,14 @@ import datetime
 from flask_marshmallow import Marshmallow
 from flask_cors import CORS
 
+
 app = Flask(__name__)
 CORS(app)
 
-app.config["SQLALCHEMY_DATABASE_URI"] = 'mysql://root:...777iamMysql@localhost/flask_react'
+DB_PASS = os.environ.get("MYSQL_PASS")
+
+
+app.config["SQLALCHEMY_DATABASE_URI"] = f'mysql://root:{DB_PASS}@localhost/flask_react'
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
 db = SQLAlchemy(app)
@@ -54,8 +59,8 @@ def get_article(id):
 
 @app.route('/add', methods=['POST'])
 def add_article():
-  title = request.json['title']
-  body = request.json['body']
+  title = request.json['formData']['title']
+  body = request.json['formData']['body']
 
   articles = Articles(title, body)
   db.session.add((articles))
@@ -66,8 +71,8 @@ def add_article():
 @app.route('/update/<id>', methods=["PATCH"])
 def update_article(id):
   single_article = Articles.query.get(id)
-  single_article.title = request.json['title'] or single_article.title
-  single_article.body = request.json['body'] or single_article.body
+  single_article.title = request.json['formData']['title'] or single_article.title
+  single_article.body = request.json['formData']['body'] or single_article.body
 
   db.session.commit()
   return article_schema.jsonify(single_article)
